@@ -6,29 +6,15 @@
 
 
 {%block body%}
-<h1>Blogs</h1>
-
-<hr>
-<h2>Create A New Blog Post</h2>
-<form action="/post" method="POST">
-    <label for="title">Title:  </label>
-    <input class="form-control" type="text" name="title" id="title" placeholder="Title" aria-label="Search">
-    <br>
-    <label for="author">Author</label>
-    <input class="form-control" type="text" name="author" id="author" placeholder="Author" aria-label="Search">
-    <br>
-    <label for="content">Post:  </label>
-    <textarea class="form-control" id="exampleFormControlTextarea1" name="content" rows="3"></textarea>
-    <br>
-
-    <br>
-
-    <input class="btn btn-warning" type="submit" value="Post">
-</form>
+<br>
+<div>
+    <h1 style="display: inline; ">Blogs</h1>
+    <a style="float: right; "  class="btn btn-success " href="/post/new">+New Post</a>
+</div>
 <hr>
 <br>
     {%for post in posts%}
-        <h2>{{post.title}}</h2>
+        <h2>{{ post.title }}</h2>
         {%if post.author%}
             <small>Written By {{post.author}} On {{post.date_posted}}</small>
         {%else%}
@@ -36,7 +22,7 @@
 {%endif%}
 <br>
 <br>
-<p>{{post.content}}</p>
+<p style="white-space: pre-wrap;">{{post.content}}</p>
 <a class="btn btn-danger" href='/post/delete/{{post.id}}'>Delete</a>
 <a class="btn btn-primary" href='/post/edit/{{post.id}}'>Edit</a>
 <br>
