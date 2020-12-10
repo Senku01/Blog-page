@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect
+from flask import Flask,render_template,request,redirect,render_template_string
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
 app=Flask(__name__)
@@ -49,10 +49,9 @@ def post():
 @app.route('/home/<string:name>/<int:id>')
 def hello(name,id):
     return "Hi ," + name + ", "+str(id)
-
-@app.route('/onlyget', methods=['GET','POST'])
+@app.route('/contact', methods=['GET','POST'])
 def get_req():
-    return 'This website only for you special website'
+    return render_template('contact.html')
 
 @app.route('/post/delete/<int:id>')
 def delete(id):
@@ -74,8 +73,18 @@ def edit(id):
     else:
         return render_template('edit.html' , post=post)
 
-
-
+@app.route('/post/new', methods=['GET','POST'])
+def new_post():
+    if request.method=='POST':
+        post.title = request.form['title']
+        post.content = request.form['content']
+        post.author = request.form['author']
+        new_post = Blogpost(title=post_title, content=post_content ,author=post_author)
+        db.session.add(new_post)
+        db.session.commit()
+        return redirect('/post')
+    else:
+        return render_template('new_post.html' , post=post)
 
 if __name__== "__main__":
     app.run(debug=True)
